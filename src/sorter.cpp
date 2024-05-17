@@ -9,9 +9,7 @@
 sorter::sorter(config config_) : m_config(config_) {
 }
 
-void sorter::sort_in_ram(tape &src,
-                         tape &dest,
-                         tape_supplier &tape_supplier) {
+void sorter::sort_in_ram(tape &src, tape &dest, tape_supplier &tape_supplier) {
     // split the tape to pieces, that fits RAM, sort separately, write to apart
     // tapes
 
@@ -61,11 +59,11 @@ void polyphase_merge(std::vector<std::unique_ptr<tape>> &lhs,
                      std::vector<std::size_t> &lhs_size,
                      std::vector<std::size_t> &rhs_size,
                      std::size_t block_size) {
-    for (auto& tp : lhs) {
+    for (auto &tp : lhs) {
         tp->rewind(0);
     }
 
-    for (auto& tp : rhs) {
+    for (auto &tp : rhs) {
         tp->rewind(0);
     }
 
@@ -144,10 +142,11 @@ void sorter::balanced_merge_sort(tape &src,
         current_tape = (current_tape + 1) % tapes_count;
     }
 
-    // now we merge `tapes_count` blocks of size `block_size` and write the result
-    // on a tape from another half
+    // now we merge `tapes_count` blocks of size `block_size` and write the
+    // result on a tape from another half
     while (block_size < total_size) {
-        polyphase_merge(first_half, second_half, first_half_size, second_half_size, block_size);
+        polyphase_merge(first_half, second_half, first_half_size,
+                        second_half_size, block_size);
         std::swap(first_half, second_half);
         std::swap(first_half_size, second_half_size);
         block_size *= tapes_count;

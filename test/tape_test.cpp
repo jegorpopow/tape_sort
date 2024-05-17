@@ -71,7 +71,7 @@ TEST_CASE("read/write advaace / rewind") {
     tp.rewind(0);
     CHECK(!tp.is_last_cell());
     std::uint32_t curr = 0;
-    while(!tp.is_last_cell()) {
+    while (!tp.is_last_cell()) {
         CHECK(curr++ == tp.read_advance());
     }
 

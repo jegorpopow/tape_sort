@@ -122,7 +122,6 @@ TEST_CASE("naive sort one block") {
     sort_in_ram_and_check(cfg, data, "naive_one_block");
 }
 
-
 TEST_CASE("balanced merge sort small test") {
     config cfg{3, 1, 1, 1, 1};
     std::mt19937 rnd(std::time(nullptr));
@@ -136,8 +135,7 @@ TEST_CASE("balanced merge sort small random test") {
     config cfg{3, 1, 1, 1, 1};
     std::mt19937 rnd(4);
     std::vector<std::uint32_t> data(10);
-    std::generate(data.begin(), data.end(),
-                  rnd);
+    std::generate(data.begin(), data.end(), rnd);
     merge_sort_and_check(cfg, data, "mergesort_small_random", 2);
 }
 
@@ -145,8 +143,7 @@ TEST_CASE("balanced merge sort one block") {
     config cfg{100, 1, 1, 1, 1};
     std::mt19937 rnd(std::time(nullptr));
     std::vector<std::uint32_t> data(25);
-    std::generate(data.begin(), data.end(),
-                  rnd);
+    std::generate(data.begin(), data.end(), rnd);
     merge_sort_and_check(cfg, data, "mergesort_small_random", 2);
 }
 
@@ -154,8 +151,7 @@ TEST_CASE("balanced merge sort divided size") {
     config cfg{10, 1, 1, 1, 1};
     std::mt19937 rnd(std::time(nullptr));
     std::vector<std::uint32_t> data(1000);
-    std::generate(data.begin(), data.end(),
-                  rnd);
+    std::generate(data.begin(), data.end(), rnd);
     merge_sort_and_check(cfg, data, "mergesort_small_random", 3);
 }
 

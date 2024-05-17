@@ -4,6 +4,7 @@
 #include "file_tape.hpp"
 #include "file_tape_supplier.hpp"
 #include "sorter.hpp"
+#include "utils.hpp"
 
 int main(int argc, char *argv[]) {
     if (argc <= 2) {
@@ -23,6 +24,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    utils::create_and_clear_file(argv[2]);
     sorter tape_sorter(*parsed_config);
     file_tape_supplier supplier("tmp/");
     file_tape src(argv[1]);
