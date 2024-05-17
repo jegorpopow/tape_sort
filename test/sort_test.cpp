@@ -57,7 +57,7 @@ void merge_sort_and_check(config cfg,
 
 }  // namespace
 
-TEST_CASE("small tape") {
+TEST_CASE("naive sort small tape") {
     config small_cfg{2, 1, 1, 1, 1};
     std::vector<std::uint32_t> data{5, 6, 3, 8, 0, 7};
     file_tape_supplier supplier("tmp/");
@@ -78,17 +78,8 @@ TEST_CASE("small tape") {
     CHECK(actual == expected);
 }
 
-TEST_CASE("naive sort divided size") {
-    config cfg{10, 1, 1, 1, 1};
-    std::mt19937 rnd(std::time(nullptr));
-    std::vector<std::uint32_t> data(1000);
-    std::generate(data.begin(), data.end(), rnd);
-
-    sort_in_ram_and_check(cfg, data, "divided");
-}
-
-TEST_CASE("big tape") {
-    config small_cfg{4096, 1, 1, 1, 1};
+TEST_CASE("naive sort big tape") {
+    config small_cfg{10200, 1, 1, 1, 1};
     std::mt19937 rnd(std::time(nullptr));
     std::vector<std::uint32_t> data(10'000'000);
     std::generate(data.begin(), data.end(), rnd);
@@ -111,6 +102,25 @@ TEST_CASE("big tape") {
     CHECK(actual == expected);
 }
 
+TEST_CASE("naive sort divided size") {
+    config cfg{10, 1, 1, 1, 1};
+    std::mt19937 rnd(std::time(nullptr));
+    std::vector<std::uint32_t> data(1000);
+    std::generate(data.begin(), data.end(), rnd);
+
+    sort_in_ram_and_check(cfg, data, "naive_divided_size");
+}
+
+TEST_CASE("naive sort one block") {
+    config cfg{100, 1, 1, 1, 1};
+    std::mt19937 rnd(std::time(nullptr));
+    std::vector<std::uint32_t> data(25);
+    std::generate(data.begin(), data.end(), rnd);
+
+    sort_in_ram_and_check(cfg, data, "naive_one_block");
+}
+
+
 TEST_CASE("balanced merge sort small test") {
     config cfg{3, 1, 1, 1, 1};
     std::mt19937 rnd(std::time(nullptr));
@@ -129,6 +139,23 @@ TEST_CASE("balanced merge sort small random test") {
     merge_sort_and_check(cfg, data, "mergesort_small_random", 2);
 }
 
+TEST_CASE("balanced merge sort one block") {
+    config cfg{100, 1, 1, 1, 1};
+    std::mt19937 rnd(std::time(nullptr));
+    std::vector<std::uint32_t> data(25);
+    std::generate(data.begin(), data.end(),
+                  rnd);
+    merge_sort_and_check(cfg, data, "mergesort_small_random", 2);
+}
+
+TEST_CASE("balanced merge sort divided size") {
+    config cfg{10, 1, 1, 1, 1};
+    std::mt19937 rnd(std::time(nullptr));
+    std::vector<std::uint32_t> data(1000);
+    std::generate(data.begin(), data.end(),
+                  rnd);
+    merge_sort_and_check(cfg, data, "mergesort_small_random", 3);
+}
 
 TEST_CASE("balanced merge sort stress test") {
     config cfg{128, 1, 1, 1, 1};
@@ -137,4 +164,3 @@ TEST_CASE("balanced merge sort stress test") {
     std::generate(data.begin(), data.end(), rnd);
     merge_sort_and_check(cfg, data, "mergesort_stress", 10);
 }
-

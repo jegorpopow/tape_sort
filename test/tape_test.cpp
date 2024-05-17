@@ -60,7 +60,7 @@ TEST_CASE("file tape stress test") {
     }
 }
 
-TEST_CASE("fill") {
+TEST_CASE("read/write advaace / rewind") {
     utils::create_and_clear_file("test_data/fill");
     file_tape tp("test_data/fill");
 

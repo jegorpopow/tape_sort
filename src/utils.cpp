@@ -2,7 +2,7 @@
 #include <fstream>
 namespace utils {
 void create_tape_file(std::string const &path,
-                      std::vector<uint32_t> const &nums) {
+                      std::vector<std::uint32_t> const &nums) {
     std::ofstream f(path);
     f.write(reinterpret_cast<const char *>(nums.data()),
             nums.size() * sizeof(nums.front()));

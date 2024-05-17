@@ -9,7 +9,7 @@
 
 namespace utils {
 void create_tape_file(std::string const &path,
-                      std::vector<uint32_t> const &nums);
+                      std::vector<std::uint32_t> const &nums);
 void create_and_clear_file(std::string const &path);
 std::vector<std::uint32_t> tape_dump(tape &tp);
 void write_to_tape(std::vector<std::uint32_t> const &data, tape &tape);
