@@ -72,7 +72,9 @@ void polyphase_merge(std::vector<std::unique_ptr<tape>> &lhs,
 
     std::vector<std::size_t> global_offset(lhs.size(), 0);
 
-    while (!lhs[0]->is_last_cell()) {
+    // lhs[0] is the longest tape, merge until
+
+    while (global_offset[0] < lhs_size[0]) {
         using pq_elem = std::pair<std::uint32_t, std::size_t>;
         std::priority_queue<pq_elem, std::vector<pq_elem>,
                             std::greater<pq_elem>>
@@ -114,9 +116,11 @@ void sorter::balanced_merge_sort(tape &src,
     // distribute values to blocks of size M, write them on tapes_count * 2
     // additional tapes
 
+    // additional tapes
     std::vector<std::unique_ptr<tape>> first_half;
     std::vector<std::unique_ptr<tape>> second_half;
 
+    // actual used prefix of each tape
     std::vector<std::size_t> first_half_size(tapes_count, 0);
     std::vector<std::size_t> second_half_size(tapes_count, 0);
 
@@ -143,7 +147,8 @@ void sorter::balanced_merge_sort(tape &src,
     }
 
     // now we merge `tapes_count` blocks of size `block_size` and write the
-    // result on a tape from another half
+    // result on tapes from another half
+
     while (block_size < total_size) {
         polyphase_merge(first_half, second_half, first_half_size,
                         second_half_size, block_size);
@@ -152,6 +157,7 @@ void sorter::balanced_merge_sort(tape &src,
         block_size *= tapes_count;
     }
 
+    // answer is on the first tape in `first_half`
     first_half.front()->rewind(0);
     for (std::size_t i = 0; i < total_size; i++) {
         dest.write_advance(first_half.front()->read_advance());
