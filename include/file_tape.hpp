@@ -14,8 +14,8 @@ public:
     explicit file_tape(std::string const &path);
     [[nodiscard]] std::uint32_t read() override;
     void write(std::uint32_t value) override;
-    void shift_right() override;
-    void shift_left() override;
+    bool shift_right() override;
+    bool shift_left() override;
     bool is_last_cell() override;
     std::uint32_t read_advance() override;
     void write_advance(std::uint32_t value) override;

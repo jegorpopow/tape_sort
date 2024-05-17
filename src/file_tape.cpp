@@ -19,17 +19,22 @@ void file_tape::write(std::uint32_t value) {
     m_file.seekg(-sizeof(value), std::ios_base::cur);
 }
 
-void file_tape::shift_left() {
+bool file_tape::shift_left() {
     if (m_offset == 0) {
-        return;
+        return false;
     }
     --m_offset;
     m_file.seekg(-sizeof(std::uint32_t), std::ios_base::cur);
+    return true;
 }
 
-void file_tape::shift_right() {
+bool file_tape::shift_right() {
+    if (is_last_cell()) {
+        return false;
+    }
     ++m_offset;
     m_file.seekg(sizeof(std::uint32_t), std::ios_base::cur);
+    return true;
 }
 
 bool file_tape::is_last_cell() {

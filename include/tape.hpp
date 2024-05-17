@@ -8,8 +8,8 @@
 struct tape {
     [[nodiscard]] virtual std::uint32_t read() = 0;
     virtual void write(std::uint32_t value) = 0;
-    virtual void shift_right() = 0;
-    virtual void shift_left() = 0;
+    virtual bool shift_right() = 0;
+    virtual bool shift_left() = 0;
     virtual void rewind(std::size_t offset) = 0;
     virtual bool is_last_cell() = 0;
     virtual std::size_t get_offset() = 0;

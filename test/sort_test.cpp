@@ -23,11 +23,13 @@ void sort_in_ram_and_check(config cfg,
 
     srt.sort_in_ram(src, dst, supplier);
     std::vector<std::uint32_t> actual = utils::tape_dump(dst);
+
     CHECK(std::is_sorted(actual.begin(), actual.end()));
 
     std::vector<std::uint32_t> expected = data;
     std::sort(expected.begin(), expected.end());
 
+    CHECK(actual.size() == expected.size());
     CHECK(actual == expected);
 }
 
@@ -45,13 +47,13 @@ void merge_sort_and_check(config cfg,
 
     srt.balanced_merge_sort(src, dst, supplier, tapes_count);
     std::vector<std::uint32_t> actual = utils::tape_dump(dst);
+
     CHECK(std::is_sorted(actual.begin(), actual.end()));
 
     std::vector<std::uint32_t> expected = data;
     std::sort(expected.begin(), expected.end());
 
     CHECK(actual.size() == expected.size());
-
     CHECK(actual == expected);
 }
 
@@ -104,7 +106,7 @@ TEST_CASE("naive sort big tape") {
 
 TEST_CASE("naive sort divided size") {
     config cfg{10, 1, 1, 1, 1};
-    std::mt19937 rnd(std::time(nullptr));
+    std::mt19937 rnd(0);
     std::vector<std::uint32_t> data(1000);
     std::generate(data.begin(), data.end(), rnd);
 
@@ -113,7 +115,7 @@ TEST_CASE("naive sort divided size") {
 
 TEST_CASE("naive sort one block") {
     config cfg{100, 1, 1, 1, 1};
-    std::mt19937 rnd(std::time(nullptr));
+    std::mt19937 rnd(18);
     std::vector<std::uint32_t> data(25);
     std::generate(data.begin(), data.end(), rnd);
 
@@ -132,7 +134,7 @@ TEST_CASE("balanced merge sort small test") {
 
 TEST_CASE("balanced merge sort small random test") {
     config cfg{3, 1, 1, 1, 1};
-    std::mt19937 rnd(std::time(nullptr));
+    std::mt19937 rnd(4);
     std::vector<std::uint32_t> data(10);
     std::generate(data.begin(), data.end(),
                   rnd);
