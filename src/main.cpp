@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     }
 
     std::string config_file_path = (argc > 4 ? argv[4] : ".tape-config");
-    std::string algo = ((argc > 3 ? argv[3] "naive"))
+    std::string algo = ((argc > 3 ? argv[3] : "naive"));
 
     std::optional<config> parsed_config = parse_config(config_file_path);
 
